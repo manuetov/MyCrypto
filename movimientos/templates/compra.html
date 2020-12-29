@@ -1,0 +1,26 @@
+{% extends 'inicio.html' %}
+
+{% block title %} Compra de Cryto {% endblock %}
+
+{% block contenido%} 
+<h1> COMPRA DE CRYPTOMONEDAS</h1>
+<form action="creacompra" method="post">
+    <div class="field">
+        <label for="tipo"> From: </label>
+        <select id="text" name="tipo"></select>
+    
+        <label for="tipo"> To: </label>
+        <select id="text" name="tipo"> <br></select>
+    </div>
+    <div>
+    <label for="Qgastar"> Q: </label>
+    <input type="number" name="Qgastar" step="0.01"> 
+    <input type="submit" value="Submit"><br>
+
+    <label for="Qcambio"> Q: <br></label>
+
+    <label for="PU"> P.U.: <br></label>
+    </div>
+</form>
+
+{% endblock %}

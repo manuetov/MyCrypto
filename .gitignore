@@ -1,2 +1,7 @@
 venv/
 __pycache__
+movimientos/__pycache__
+.env
+.vscode/
+movimientos/Data/basededatos.csv
+config.py   

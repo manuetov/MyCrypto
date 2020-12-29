@@ -1,8 +1,33 @@
 {% extends 'inicio.html' %}
 
-{% block title %} Listado {% endblock %}
+{% block title %} Movimientos {% endblock %}
 
 {% block contenido %}
-    <h1> lista de Movimientos</h1>
-    <p>Aqui va mi lista de movimientos</p>
+    <h1> listado de Movimientos <a href="creacompra"> Nueva compra </a></h1>
+    <table>
+        <tr>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>From</th>
+            <th>Q</th>
+            <th>To</th>
+            <th>Q</th>
+            <th>P.U.</th>
+        </tr>
+    {% for registro in datos %}
+        <tr>
+            <td>{{ registro[0] }} </td>          
+            <td>{{ registro[1] }} </td>
+            <td>{{ registro[2] }} </td>          
+            <td>{{ registro[3] }} </td>
+            <td>{{ registro[4] }} </td>
+            <td>{{ registro[5] }} </td>          
+            <td>{{ registro[6] }} </td>
+        </tr>
+    {% endfor %}
+        <tr>
+            <td colspan="3">Total: {{total}}€ </td>
+        </tr>    
+    </table>
+    
 {% endblock %}
