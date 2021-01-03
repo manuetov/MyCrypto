@@ -1,33 +1,39 @@
-{% extends 'inicio.html' %}
+{% extends 'base.html' %}
 
 {% block title %} Movimientos {% endblock %}
 
 {% block contenido %}
-    <h1> listado de Movimientos <a href="creacompra"> Nueva compra </a></h1>
-    <table>
-        <tr>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>From</th>
-            <th>Q</th>
-            <th>To</th>
-            <th>Q</th>
-            <th>P.U.</th>
-        </tr>
-    {% for registro in datos %}
-        <tr>
-            <td>{{ registro[0] }} </td>          
-            <td>{{ registro[1] }} </td>
-            <td>{{ registro[2] }} </td>          
-            <td>{{ registro[3] }} </td>
-            <td>{{ registro[4] }} </td>
-            <td>{{ registro[5] }} </td>          
-            <td>{{ registro[6] }} </td>
-        </tr>
-    {% endfor %}
-        <tr>
-            <td colspan="3">Total: {{total}}€ </td>
-        </tr>    
-    </table>
-    
+    <h1> listado de Movimientos </h1> 
+    <form action="creacompra">
+        <input type="submit" value=" + "> 
+        {% if datos |length > 0 %} <!--si hay movimientos saca la tabla else parrafo no hay movimientos-->
+        </form>
+        <table>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>From</th>
+                <th>Q</th>
+                <th>To</th>
+                <th>Q</th>
+                <th>P.U.</th>
+            </tr>
+        {% for registro in datos %}
+            <tr>
+                <td>{{ registro['date'] }} </td> <!-- lista de diccionarios en vez de lista de duplas-->         
+                <td>{{ registro['time'] }} </td>
+                <td>{{ registro['from_currency'] }} </td>          
+                <td>{{ registro['from_quantity'] }} </td>
+                <td>{{ registro['to_currency'] }} </td>
+                <td>{{ registro['to_quantity'] }} </td>          
+                <td>{{ registro['PU'] }} </td>
+            </tr>
+        {% endfor %}
+            <tr>
+                <td colspan="3">Total: {{total}}€ </td>
+            </tr>    
+        </table>
+    {% else %}
+        <p>No hay movimientos </p>
+    {% endif %}
 {% endblock %}
