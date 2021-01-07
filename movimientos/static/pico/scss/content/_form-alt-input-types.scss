@@ -1,0 +1,278 @@
+/**
+ * Form elements
+ * Alternatives input types (Not Checkboxes & Radios)
+ */
+
+// Color
+[type="color"] {
+
+  // Wrapper
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  &::-moz-focus-inner {
+    padding: 0;
+  }
+
+  // Swatch
+  &::-webkit-color-swatch {
+    border: none;
+    border-radius: calc(var(--block-round)/2);
+  }
+  &::-moz-color-swatch {
+    border: none;
+    border-radius: calc(var(--block-round)/2);
+  }
+}
+
+// Date & Time
+[type="date"],
+[type="datetime-local"],
+[type="month"],
+[type="time"],
+[type="week"] {
+  background-image: var(--icon-date);
+  background-position: center right .75rem;
+  background-repeat: no-repeat;
+  background-size: 1rem auto;
+
+  &::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+}
+
+// Time
+[type="time"] {
+  background-image: var(--icon-time);
+}
+
+// File
+[type="file"] {
+  padding: calc(var(--form-element-spacing-vertical)/2) 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+
+  &::-webkit-file-upload-button {
+    padding: calc(var(--form-element-spacing-vertical)/2) calc(var(--form-element-spacing-horizontal)/2);
+    border: var(--button-border-width) solid var(--secondary-border);
+    background-color: var(--secondary);
+    box-shadow: var(--button-shadow);
+    color: var(--secondary-inverse);
+
+    @if $enable-transitions {
+      transition:
+        background-color var(--transition),
+        border-color var(--transition),
+        color var(--transition),
+        box-shadow var(--transition);
+    }
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    border: none;
+    background: none;
+
+    &::-webkit-file-upload-button {
+      border-color: var(--secondary-hover-border);
+      background-color: var(--secondary-hover);
+    }
+  }
+
+  &:focus {
+    &::-webkit-file-upload-button {
+      box-shadow: none;
+    }
+  }
+}
+
+// Range
+[type="range"]{
+  // Config
+  $height-track: .25rem;
+  $height-thumb: 1.25rem;
+  $border-thumb: 2px;
+
+  // Styles
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  display: block;
+  width: 100%;
+  height: $height-thumb;
+  background: transparent;
+
+  // Slider Track
+  &::-webkit-slider-runnable-track {
+    width: 100%;
+    height: $height-track;
+    border-radius: var(--block-round);
+    background-color: var(--input-border);
+
+    @if $enable-transitions {
+      transition:
+        background-color var(--transition),
+        box-shadow var(--transition);
+    }
+  }
+
+  &::-moz-range-track {
+    width: 100%;
+    height:$height-track;
+    border-radius: var(--block-round);
+    background-color: var(--input-border);
+
+    @if $enable-transitions {
+      transition:
+        background-color var(--transition),
+        box-shadow var(--transition);
+    }
+  }
+
+  &::-ms-track {
+    width: 100%;
+    height: $height-track;
+    border-radius: var(--block-round);
+    background-color: var(--input-border);
+
+    @if $enable-transitions {
+      transition:
+        background-color var(--transition),
+        box-shadow var(--transition);
+    }
+  }
+
+  &::-ms-fill-lower {
+    background-color: var(--input-border);
+  }
+
+  // Slider Thumb
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: $height-thumb;
+    height: $height-thumb;
+    margin-top: #{(-($height-thumb/2) + ($height-track/2))};
+    border: $border-thumb solid var(--input-background);
+    border-radius: 50%;
+    background-color: var(--text);
+    cursor: pointer;
+
+    @if $enable-transitions {
+      transition:
+        background-color var(--transition),
+        transform var(--transition);
+    }
+  }
+
+  &::-moz-range-thumb {
+    -webkit-appearance: none;
+    width: $height-thumb;
+    height: $height-thumb;
+    margin-top: #{(-($height-thumb/2) + ($height-track/2))};
+    border: $border-thumb solid var(--input-background);
+    border-radius: 50%;
+    background-color: var(--text);
+    cursor: pointer;
+
+    @if $enable-transitions {
+      transition:
+        background-color var(--transition),
+        transform var(--transition);
+    }
+  }
+
+  &::-ms-thumb {
+    -webkit-appearance: none;
+    width: $height-thumb;
+    height: $height-thumb;
+    margin-top: #{(-($height-thumb/2) + ($height-track/2))};
+    border: $border-thumb solid var(--input-background);
+    border-radius: 50%;
+    background-color: var(--text);
+    cursor: pointer;
+
+    @if $enable-transitions {
+      transition:
+        background-color var(--transition),
+        transform var(--transition);
+    }
+  }
+
+  &:focus {
+
+    @if $enable-important {
+      background: transparent !important;
+    }
+    @else {
+      background: transparent;
+    }
+
+    // Slider Track
+    &::-webkit-slider-runnable-track {
+      box-shadow: 0 0 0 0.1rem var(--input-focus);
+    }
+
+    &::-moz-range-track {
+      box-shadow: 0 0 0 0.1rem var(--input-focus);
+    }
+
+    &::-ms-track {
+      box-shadow: 0 0 0 0.1rem var(--input-focus);
+    }
+
+    &::-ms-fill-lower {
+      box-shadow: 0 0 0 0.1rem var(--input-focus);
+    }
+  }
+
+  &:active {
+
+    @if $enable-important {
+      background: transparent !important;
+    }
+    @else {
+      background: transparent;
+    }
+
+    // Slider Thumb
+    &::-webkit-slider-thumb {
+      transform: scale(1.25);
+      background-color: var(--primary);
+    }
+
+    &::-moz-range-thumb {
+      transform: scale(1.25);
+      background-color: var(--primary);
+    }
+
+    &::-ms-thumb {
+      transform: scale(1.25);
+      background-color: var(--primary);
+    }
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+// Search
+[type="search"] {
+  border-radius: 5rem;
+
+  @if $enable-important {
+    padding-left: calc(var(--form-element-spacing-horizontal) + 1.5rem) !important;
+    background-image: var(--icon-search);
+    background-position: center left .75rem;
+    background-repeat: no-repeat;
+    background-size: 1rem auto;
+  }
+
+  // Cancel button
+  &::-webkit-search-cancel-button{
+    -webkit-appearance: none;
+    display: none;
+  }
+}

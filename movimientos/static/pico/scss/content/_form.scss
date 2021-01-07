@@ -1,0 +1,319 @@
+/**
+ * Form elements
+ */
+
+
+// Reboot based on :
+// - normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css
+// - sanitize.css v12.0.1 | CC0 1.0 Universal | github.com/csstools/sanitize.css
+// ––––––––––––––––––––
+
+// 1. Change the font styles in all browsers
+// 2. Remove the margin in Firefox and Safari
+input,
+optgroup,
+select,
+textarea {
+  margin: 0; // 2
+  font-family: inherit; // 1
+  font-size: 1rem; // 1
+  letter-spacing: inherit; // 2
+  line-height: var(--line-height); // 1
+}
+
+// Show the overflow in IE.
+input {
+  overflow: visible;
+}
+
+// Remove the inheritance of text transform in Edge, Firefox, and IE
+select {
+  text-transform: none;
+}
+
+// 1. Correct the text wrapping in Edge and IE
+// 2. Correct the color inheritance from `fieldset` elements in IE
+// 3. Remove the padding so developers are not caught out when they zero out
+// `fieldset` elements in all browsers
+legend {
+  max-width: 100%; // 1
+  padding: 0; // 3
+  color: inherit; // 2
+  white-space: normal; // 1
+}
+
+// 1. Remove the margin in Firefox and Safari
+// 2. Remove the default vertical scrollbar in IE
+// 3. Change the resize direction in all browsers (opinionated)
+textarea {
+  margin: 0; // 1
+  overflow: auto; // 2
+  resize: vertical; // 3
+  resize: block; // 3
+}
+
+// Remove the padding in IE 10
+[type="checkbox"],
+[type="radio"] {
+  padding: 0;
+}
+
+// Correct the cursor style of increment and decrement buttons in Safari
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+// 1. Correct the odd appearance in Chrome and Safari
+// 2. Correct the outline style in Safari
+[type="search"] {
+  -webkit-appearance: textfield; // 1
+  outline-offset: -2px; // 2
+}
+
+// Remove the inner padding in Chrome and Safari on macOS
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+// 1. Correct the inability to style clickable types in iOS and Safari
+// 2. Change font properties to `inherit` in Safari
+::-webkit-file-upload-button {
+  -webkit-appearance: button; // 1
+  font: inherit; // 2
+}
+
+// Remove the inner border and padding of focus outlines in Firefox
+::-moz-focus-inner {
+  padding: 0;
+  border-style: none;
+}
+
+//  Restore the focus outline styles unset by the previous rule in Firefox
+:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+// Remove the additional :invalid styles in Firefox
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+// Change the inconsistent appearance in IE (opinionated)
+::-ms-expand {
+  display: none;
+}
+
+// Remove the border and padding in all browsers (opinionated)
+[type="file"],
+[type="range"] {
+  padding: 0;
+  border-width: 0;
+}
+
+
+// Pico
+// ––––––––––––––––––––
+
+// Force height for alternatives input types
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
+  height: calc(
+    (1rem * var(--line-height)) +
+    (var(--form-element-spacing-vertical) * 2) +
+    (var(--form-element-border-width) * 2)
+  );
+}
+
+// Fieldset
+fieldset {
+  margin: 0;
+  margin-bottom: var(--spacing-typography);
+  padding: 0;
+  border: 0;
+}
+
+// Label & legend
+label,
+fieldset legend {
+  display: block;
+  margin-bottom: var(--spacing-form-element);
+  vertical-align: middle;
+}
+
+// Global layout
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea,
+form small {
+  display: block;
+  width: 100%;
+}
+
+// Reset appearance (Not Checkboxes, Radios, Range and File)
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
+select,
+textarea {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  padding: var(--form-element-spacing-vertical) var(--form-element-spacing-horizontal);
+  vertical-align: middle;
+}
+
+// Commons styles
+input,
+select,
+textarea {
+  border: var(--form-element-border-width) solid var(--input-border);
+  border-radius: var(--block-round);
+  outline: none;
+  background-color: var(--input-background);
+  color: var(--text);
+  font-weight: var(--form-element-weight);
+
+
+  @if $enable-transitions {
+    transition:
+      background-color var(--transition),
+      border-color var(--transition),
+      color var(--transition),
+      box-shadow var(--transition);
+  }
+
+  &::placeholder,
+  &::-webkit-input-placeholder {
+    color: var(--muted-text);
+    opacity: 1;
+  }
+
+  &:active,
+  &:focus {
+    border-color: var(--input-hover-border);
+    background-color: var(--input-hover-background);
+  }
+
+  &[readonly],
+  &[disabled] {
+    border-color: var(--muted-border);
+    box-shadow: none;
+
+    & ~ label {
+      color: var(--muted-text);
+    }
+
+    &:active,
+    &:focus {
+      @if $enable-important {
+        box-shadow: none !important;
+      }
+      @else {
+        box-shadow: none;
+      }
+    }
+  }
+
+  &[disabled]:not([type="reset"]):not([type="submit"]):not([type="button"]) {
+    background-color: var(--muted-background);
+  }
+
+  &[disabled] {
+    opacity: .66;
+  }
+
+  // Validation states: with aria-invalid only
+  @if $enable-classes {
+    .valid,
+    .invalid,
+    &[aria-invalid] {
+      padding-right: 2rem;
+      background-position: center right .75rem;
+      background-repeat: no-repeat;
+      background-size: 1rem auto;
+    }
+
+    .valid,
+    &[aria-invalid="false"] {
+      background-image: var(--icon-valid);
+    }
+
+    .invalid,
+    &[aria-invalid="true"]{
+      background-image: var(--icon-invalid);
+    }
+  }
+
+  // Validation states: with aria-invalid and classes (.valid & .invalid)
+  @else {
+    &[aria-invalid] {
+      padding-right: 2rem;
+      background-position: center right .75rem;
+      background-repeat: no-repeat;
+      background-size: 1rem auto;
+    }
+
+    &[aria-invalid="false"] {
+      background-image: var(--icon-valid);
+    }
+
+    &[aria-invalid="true"]{
+      background-image: var(--icon-invalid);
+    }
+  }
+}
+
+// Margin bottom (Not Checkboxes andRadios)
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  margin-bottom: var(--spacing-typography);
+}
+
+// Focus styles (Not Range and File)
+input:not([type="range"]):not([type="file"]),
+select,
+textarea {
+  &:focus  {
+    box-shadow: 0 0 0 var(--form-element-outline-width) var(--input-focus);
+ }
+}
+
+// Select
+select {
+
+  // Unstyle the caret on `<select>`s in IE10+.
+  &::-ms-expand {
+    border: 0;
+    background-color: transparent;
+  }
+
+  &:not([multiple]):not([size]) {
+    padding-right: calc(var(--form-element-spacing-horizontal) + 1.5rem);
+    background-image: var(--icon-chevron);
+    background-position: center right .75rem;
+    background-repeat: no-repeat;
+    background-size: 1rem auto;
+  }
+}
+
+// Helper
+form small {
+  color: var(--muted-text);
+}
+
+input,
+select,
+textarea {
+  + small {
+    margin-top: calc(var(--spacing-typography) * -0.75);
+    margin-bottom: var(--spacing-typography);
+  }
+}
+
+// Styles for Input inside a label
+label {
+  & > input,
+  & > select,
+  & > textarea {
+    margin-top: var(--spacing-form-element);
+  }
+}

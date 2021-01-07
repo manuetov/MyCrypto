@@ -4,31 +4,49 @@
 
 {% block contenido%} 
 <h1> COMPRA DE CRYPTOMONEDAS</h1>
-<form action="creacompra" method="post">
-    <div class="field">
-        <label for="date"> Fecha </label>
-        <input type="date" name="date"> <br>
-        <label for="time"> Hora </label>
-        <input type="time" name="time">
-     
-        <label for="from_currency"> Moneda a pagar</label>
-        <input type="text" name="from_currency" value="EUR" ><br>
-
-        <label for="to_currency"> Moneda a comprar: </label>
-        <input type="text" name="to_currency" value="BTC"><br>
-    </div>
-    <div>
-        <label for="from_quantity"> Q: </label>
-        <input type="number" name="from_quantity" step="0.01" ><br>
+<a href="/">Inicio</a>
+<form action={{url_for("nuevaCompra")}} method="post">
+    {{ form.hidden_tag() }}
+</br><div class="field">
+        {{ form.date.label }}
+        {{ form.date(type="date") }}
         
-        <label for="to_quantity"> Q: </label>
-        <input type="number" name="to_quantity" step="0.01" > <br>
-
-        <label for="PU"> P.U.: </label>
-        <input type="number" name="PU" step="0.01" > <br>
-    </div>
+        {{ form.time.label }}
+        {{ form.time(type="time") }}        
+    </div></br>
+    <div>  
+        {{ form.from_currency.label }}
+            <select name ="from_currency">
+            <option value="{{  request.form.from_currency }}">EUR </option>
+            <option value="{{  request.form.from_currency }}">ETH </option>
+            <option value="{{  request.form.from_currency }}">LTC </option>
+            <option value="{{  request.form.from_currency }}">BNB </option>
+            <option value="{{  request.form.from_currency }}">EOS </option>
+            <option value="{{  request.form.from_currency }}">XLM </option>
+            <option value="{{  request.form.from_currency }}">TRX </option>
+        </select>
+        {{ form.from_quantity.label }}
+        <select>
+            <option value="{{  request.form.from_quantity }}">BTC </option>
+            <option value="{{  request.form.from_quantity }}">XRP </option>
+            <option value="{{  request.form.from_quantity }}">BCH </option>
+            <option value="{{  request.form.from_quantity }}">USDT </option>
+            <option value="{{  request.form.from_quantity }}">BSV </option>
+            <option value="{{  request.form.from_quantity }}">ADA </option>
+        </select>
+    </div></br>
+    <div>
+        {{ form.to_currency.label }}
+        {{ form.to_currency(placeholder="") }}
+        {{ form.to_quantity.label() }}
+        {{ form.to_quantity() }}
+    </div></br>
+    <div> 
+        {{ form.PU.label }}
+        {{ form.PU }} 
+    </div></br>
     <div class="field">
-        <input type="submit" value="&check;">
+        {{ form.submit }}
     </div>
 </form>
 

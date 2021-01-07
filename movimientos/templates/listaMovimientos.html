@@ -3,36 +3,46 @@
 {% block title %} Movimientos {% endblock %}
 
 {% block contenido %}
-    <h1> listado de Movimientos </h1> 
-    <form action="creacompra">
-        <input type="submit" value=" + "> 
-        {% if datos |length > 0 %} <!--si hay movimientos saca la tabla else parrafo no hay movimientos-->
-        </form>
-        <table>
-            <tr>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>From</th>
-                <th>Q</th>
-                <th>To</th>
-                <th>Q</th>
-                <th>P.U.</th>
-            </tr>
-        {% for registro in datos %}
-            <tr>
-                <td>{{ registro['date'] }} </td> <!-- lista de diccionarios en vez de lista de duplas-->         
-                <td>{{ registro['time'] }} </td>
-                <td>{{ registro['from_currency'] }} </td>          
-                <td>{{ registro['from_quantity'] }} </td>
-                <td>{{ registro['to_currency'] }} </td>
-                <td>{{ registro['to_quantity'] }} </td>          
-                <td>{{ registro['PU'] }} </td>
-            </tr>
-        {% endfor %}
-            <tr>
-                <td colspan="3">Total: {{total}}€ </td>
-            </tr>    
-        </table>
+
+    {% if datos |length > 0 %} <!--si hay movimientos saca la tabla else parrafo no hay movimientos-->
+
+    <body>
+        <h1> Movimientos </h1>
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="Fecha">Date</th>
+                    <th scope="Hora">Time</th>
+                    <th scope="From">From</th>
+                    <th scope="Quantity">Q</th>
+                    <th scope="To">To</th>
+                    <th scope="Quantity">Q</th>
+                    <th scope="P.U.">P.U.</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for registro in datos %}
+                <tr>
+                    <td>{{ registro['date'] }} </td> <!-- lista de diccionarios en vez de lista de duplas-->         
+                    <td>{{ registro['time'] }} </td>
+                    <td>{{ registro['from_currency'] }} </td>          
+                    <td>{{ registro['from_quantity'] }} </td>
+                    <td>{{ registro['to_currency'] }} </td>
+                    <td>{{ registro['to_quantity'] }} </td>          
+                    <td>{{ registro['PU'] }} </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+    </table>
+
+        <tr>
+                <td class="PU" colspan="3"> Total P.U. : {{total}}€ <br><br></td>
+        </tr> 
+        
+        <form action="creacompra">
+            <input type="submit" value=" + "> </form>
     {% else %}
         <p>No hay movimientos </p>
     {% endif %}

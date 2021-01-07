@@ -1,4 +1,5 @@
 # Instalación
+- pip install Flask-WTF
 ## Dependencias
 - Flask
 pip3 install coinmarketcap
