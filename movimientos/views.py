@@ -39,8 +39,7 @@ def dbconsulta(query, params=()):
 
 @app.route('/')
 def listaMovimientos():
-    
-    
+    form = MovementForm()
     ingresos = dbconsulta('SELECT date, time, from_currency, from_quantity, to_currency, to_quantity, PU FROM movimientos') 
     
     sumador = 0

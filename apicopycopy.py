@@ -4,7 +4,7 @@ from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 
 
-conversion = 'https://pro-api.coinmarketcap.com/v1/tools/price-conversion'
+#conversion = 'https://pro-api.coinmarketcap.com/v1/tools/price-conversion'
 
 url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
 

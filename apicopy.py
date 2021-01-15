@@ -3,9 +3,10 @@ import requests
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 
-class Crypto():
+class CryptoMonedas():
 
-    def get10Crypto(self):
+    def getCrypto(self):
+        #conversion = 'https://pro-api.coinmarketcap.com/v1/tools/price-conversion'
 
         url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
 
@@ -29,20 +30,14 @@ class Crypto():
 
         return json.dumps(bitcoinlist)
 
+cryp10 = CryptoMonedas()
+lista = cryp10.getCrypto()
+print (lista)
+
+
+
+
 '''
-try:
-    for x in range (9):
-        bitcoin = data['data'][x]
-        bitcoinName = bitcoin['name']
-        bitcoinSymbol = bitcoin['symbol']
-        bitcoinSlug = bitcoin['slug']
-        bitcoinPrice = bitcoin['quote']['USD']['price']
-
-        print("bitcoin name is: {}, symbol: {}, slug: {}, price: {} ".format(bitcoinName, bitcoinSymbol, bitcoinSlug, bitcoinPrice))
-except (ConnectionAbortedError, Timeout, TooManyRedirects) as e:
-    print(e)
-
-
 #coin_url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/map'
 # price_url = 'https://pro-api.coinmarketcap.com/v1/tools/price-conversion'
 coin_url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/map'

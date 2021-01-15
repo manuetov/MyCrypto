@@ -4,8 +4,8 @@
 
 {% block contenido%} 
 <h1> COMPRA DE CRYPTOMONEDAS</h1>
-<a href="/">Inicio</a>
-<form action={{url_for("nuevaCompra")}} method="post">
+
+<form action="nuevacompra" method="post">
     {{ form.hidden_tag() }}
 </br><div class="field">
         {{ form.date.label }}
@@ -14,16 +14,16 @@
         {{ form.time.label }}
         {{ form.time(type="time") }}        
     </div></br>
-    <div>  
+    <div class="field">  
         {{ form.from_currency.label }}
             <select name ="from_currency">
-            <option value="{{  request.form.from_currency }}">EUR </option>
-            <option value="{{  request.form.from_currency }}">ETH </option>
-            <option value="{{  request.form.from_currency }}">LTC </option>
-            <option value="{{  request.form.from_currency }}">BNB </option>
-            <option value="{{  request.form.from_currency }}">EOS </option>
-            <option value="{{  request.form.from_currency }}">XLM </option>
-            <option value="{{  request.form.from_currency }}">TRX </option>
+            <option value="{{  form.from_currency.data }}">EUR </option>
+            <option value="{{  form.from_currency.data }}">ETH </option>
+            <option value="{{  form.from_currency.data }}">LTC </option>
+            <option value="{{  form.from_currency.data }}">BNB </option>
+            <option value="{{  form.from_currency.data }}">EOS </option>
+            <option value="{{  form.from_currency.data }}">XLM </option>
+            <option value="{{  form.from_currency.data }}">TRX </option>
         </select>
         {{ form.from_quantity.label }}
         <select>
@@ -35,7 +35,7 @@
             <option value="{{  request.form.from_quantity }}">ADA </option>
         </select>
     </div></br>
-    <div>
+    <div class="field">
         {{ form.to_currency.label }}
         {{ form.to_currency(placeholder="") }}
         {{ form.to_quantity.label() }}
