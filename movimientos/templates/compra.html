@@ -5,7 +5,7 @@
 {% block contenido%} 
 <h1> COMPRA DE CRYPTOMONEDAS</h1>
 
-<form action="nuevacompra" method="post">
+<form action="creacompra" method="post">
     {{ form.hidden_tag() }}
 </br><div class="field">
         {{ form.date.label }}
@@ -14,32 +14,39 @@
         {{ form.time.label }}
         {{ form.time(type="time") }}        
     </div></br>
-    <div class="field">  
-        {{ form.from_currency.label }}
-            <select name ="from_currency">
-            <option value="{{  form.from_currency.data }}">EUR </option>
-            <option value="{{  form.from_currency.data }}">ETH </option>
-            <option value="{{  form.from_currency.data }}">LTC </option>
-            <option value="{{  form.from_currency.data }}">BNB </option>
-            <option value="{{  form.from_currency.data }}">EOS </option>
-            <option value="{{  form.from_currency.data }}">XLM </option>
-            <option value="{{  form.from_currency.data }}">TRX </option>
-        </select>
-        {{ form.from_quantity.label }}
+    <div class="form-group">
+        {{ form.from_currency.label() }}
+        {{ form.from_currency(class="custom-select custom-select mb-3", placeholder="FROM")  }}
         <select>
-            <option value="{{  request.form.from_quantity }}">BTC </option>
-            <option value="{{  request.form.from_quantity }}">XRP </option>
-            <option value="{{  request.form.from_quantity }}">BCH </option>
-            <option value="{{  request.form.from_quantity }}">USDT </option>
-            <option value="{{  request.form.from_quantity }}">BSV </option>
-            <option value="{{  request.form.from_quantity }}">ADA </option>
+            <option value="{{  request.form.from_currency }}">EUR </option>
+            <option value="{{  request.form.from_currency }}">BTC </option>
+            <option value="{{  request.form.from_currency }}">XRP </option>
+            <option value="{{  request.form.from_currency }}">BCH </option>
+            <option value="{{  request.form.from_currency }}">USDT </option>
+            <option value="{{  request.form.from_currency }}">BSV </option>
+            <option value="{{  request.form.from_currency }}">ADA </option>
         </select>
-    </div></br>
-    <div class="field">
+        <div>
+        {{ form.to_quantity.label }}
+        {{ form.to_quantity(placeholder="") }}
+        </div>
+        <div>
         {{ form.to_currency.label }}
-        {{ form.to_currency(placeholder="") }}
+        <select>
+            <option value="{{  request.form.to_currency }}">BTC </option>
+            <option value="{{  request.form.to_currency }}">XRP </option>
+            <option value="{{  request.form.to_currency }}">BCH </option>
+            <option value="{{  request.form.to_currency }}">USDT </option>
+            <option value="{{  request.form.to_currency }}">BSV </option>
+            <option value="{{  request.form.to_currency }}">ADA </option>
+        </select>
+        </div></br>
+        <div class="field">
         {{ form.to_quantity.label() }}
         {{ form.to_quantity() }}
+        </div>
+        
+        
     </div></br>
     <div> 
         {{ form.PU.label }}

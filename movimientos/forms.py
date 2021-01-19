@@ -9,12 +9,13 @@ class MovementForm (FlaskForm):
     listaCrypto = crypto10.get10Crypto()
     print (listaCrypto)
 
-    date = DateField('date')
-    time = DateTimeField('time')
-    from_currency = SelectField('from_currency', choices=listaCrypto, validators=[DataRequired(message='valor requerido')]) # los validadores de la clase Forms hay que ponerles parentesis. los que creeemos nosotros no hay quen ponerle el parentesis
-    from_quantity = SelectField('from_quantity', choices=[('BTC, XRP, BCH, USDT, BSV, ADA,')], validators=[DataRequired(message='valor requerido')]) 
-    to_currency = FloatField('to_currency')
-    to_quantity = FloatField('to_quantity')
-    PU = FloatField('PU')
+    date = StringField('date')
+    time = StringField('time')
+    from_currency = SelectField('From:', choices=[('EUR, BTC, XRP, BCH, USDT, BSV, ADA')], validators=[DataRequired(message='valor requerido')]) # los validadores de la clase Forms hay que ponerles parentesis. los que creeemos nosotros no hay quen ponerle el parentesis
+    from_quantity = FloatField('Q:')  
+    to_currency = SelectField('To:', choices=[('BTC, XRP, BCH, USDT, BSV, ADA,')], validators=[DataRequired()])
+    to_quantity = FloatField('Q:')
+    PU = FloatField('P.U.:')
 
     submit = SubmitField('Ok')
+    

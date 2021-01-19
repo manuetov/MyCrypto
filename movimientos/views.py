@@ -7,7 +7,8 @@ from movimientos.api import Crypto
 
 
 #la unica manera para que un boton redirija a otra pagina es metiendolo en un formulario html, sino se deberia usar un hiperviculo html
-DBFILE = app.config['DBFILE']
+DBFILE = app.config['DBFILE'] # DBFILE='movimientos/Data/basededatos.db
+
 
 def dbconsulta(query, params=()):
     conn = sqlite3.connect(DBFILE)
@@ -39,7 +40,7 @@ def dbconsulta(query, params=()):
 
 @app.route('/')
 def listaMovimientos():
-    form = MovementForm()
+    
     ingresos = dbconsulta('SELECT date, time, from_currency, from_quantity, to_currency, to_quantity, PU FROM movimientos') 
     
     sumador = 0
@@ -52,12 +53,11 @@ def listaMovimientos():
 def nuevaCompra():
     form = MovementForm(request.form) # crea la instancia y se inicializa con los datos que vienen en request que es un objeto con todos los datos de la peticion creada en el navegador
     
-    
     if request.method == 'POST' and form.validate_on_submit():
         dbconsulta('INSERT INTO movimientos (date, time, from_currency, from_quantity, to_currency, to_quantity, PU) VALUES (?,?,?,?,?,?,?);', 
             (
             form.date.data, form.time.data, form.from_currency.data, form.from_quantity.data, 
-            form.to_currency.data, form.to_quantity.data, form.PU.data,
+            form.to_currency.data, form.to_quantity.data, form.PU.data
             ))  
 
         return redirect(url_for('listaMovimientos'))

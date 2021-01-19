@@ -4,7 +4,7 @@
 - Flask
 pip3 install coinmarketcap
 # Se guarda el url del api para bitcoin
-bitcoin_api_url = 'https://api.coinmarketcap.com/v1/ticker/bitcoin/'
+bitcoin_api_url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
 # Se guarda la consulta al url de bitcoin
 respuesta = requests.get(bitcoin_api_url)
 # Se obtiene el json de la respuesta
@@ -22,3 +22,4 @@ coinmarketcap = Market()
 coinmarketcap.ticker("bitcoin")
 # Se tienen dos formas de obtener la información del sitio coinmarketcap, una es usando request y otra la librería que accede directamente al API,
 pip install requests==2.18.4
+pip install Flask-Bootstrap
