@@ -1,2 +1,2 @@
 SECRET_KEY='supersegura'
-DBFILE='movimientos/Data/basededatos.db'
+DBFILE='movimientos/Data/basedatos.db'
