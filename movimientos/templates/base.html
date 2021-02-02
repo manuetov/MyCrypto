@@ -7,26 +7,30 @@
         
         <title> CRYPTO - {% block title %} {% endblock %}</title>
         
-        <link rel="stylesheet" href="css/pico.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="/static/css/font-awesome.css">
         <link rel="stylesheet" href="/static/css/pico.css">
         <link rel="stylesheet" href="/static/css/styles.css"> 
 
     </head>
-    <body>
-        <header data-theme="dark">
-            <div class="MyCrypto">Boot Z 6 - MyCRYPTO</div>
-            <nav>
-                <ul>
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="/creacompra">Compra</a></li>
-                </ul>
-            </nav>    
-        </header>
+    
+    <header data-theme="dark">
+        <p class="header"> MiCRYPTO Simulador de Inversiones</p>
 
-        <div class="container">
+        {% if menu == 'listaMovimientos' %}
+        <u class="title_text">Inicio</u> | <a href="/nuevacompra" class="title_text">Compra</a> | <a href="/status" class="title_text">Status </a>
+        {% elif menu == 'nuevacompra' %}
+        <a href="/" class="title_text">Inicio</a> | <u class="title_text">Compra</u> | <a href="/status" class="title_text">Status </a>
+        {% elif menu == 'status'%}
+        <a href="/" class="title_text">Inicio</a> | <a href="/nuevacompra" class="title_text">Compra</a> | <u class="title_text">Status </u>
+        {% endif %}
+    </header>
+
+    <body>
+        <section class="container">
             {% block contenido%}  {% endblock %}
-        </div></br>
+        </section>
 
         <footer> &copy; 2021 Todos los derechos reservados</footer>
     </body>

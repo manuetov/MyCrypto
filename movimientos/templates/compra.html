@@ -1,53 +1,43 @@
 {% extends 'base.html' %}
 
-{% block title %} Compra de Cryto {% endblock %}
+{% block title %} Compra de Cryto - Converter {% endblock %}
 
 {% block contenido%} 
-<h1> COMPRA DE CRYPTOMONEDAS</h1>
+<h1 align="center" class="title"> COMPRA DE CRYPTOMONEDAS</h1>
 
-<form action="creacompra" method="post">
+<form action="/nuevacompra" method="post">
     {{ form.hidden_tag() }}
-</br><div class="field">
-        {{ form.date.label }}
-        {{ form.date(type="date") }}
+    
+    <div class="form-group">
+        {{ form.from_currency.label() }}
+        {{ form.from_currency(class="custom-select custom-select-lg mb-3", placeholder="FROM", style="width:120px") }}
         
-        {{ form.time.label }}
-        {{ form.time(type="time") }}        
-    </div></br>
-    <div class="field">  
-        {{ form.from_currency.label }}
-            <select name ="from_currency">
-            <option value="{{  form.from_currency.data }}">EUR </option>
-            <option value="{{  form.from_currency.data }}">ETH </option>
-            <option value="{{  form.from_currency.data }}">LTC </option>
-            <option value="{{  form.from_currency.data }}">BNB </option>
-            <option value="{{  form.from_currency.data }}">EOS </option>
-            <option value="{{  form.from_currency.data }}">XLM </option>
-            <option value="{{  form.from_currency.data }}">TRX </option>
-        </select>
         {{ form.from_quantity.label }}
-        <select>
-            <option value="{{  request.form.from_quantity }}">BTC </option>
-            <option value="{{  request.form.from_quantity }}">XRP </option>
-            <option value="{{  request.form.from_quantity }}">BCH </option>
-            <option value="{{  request.form.from_quantity }}">USDT </option>
-            <option value="{{  request.form.from_quantity }}">BSV </option>
-            <option value="{{  request.form.from_quantity }}">ADA </option>
-        </select>
-    </div></br>
-    <div class="field">
+        {{ form.from_quantity(placeholder='0', style="width:150px") }} 
+
         {{ form.to_currency.label }}
-        {{ form.to_currency(placeholder="") }}
-        {{ form.to_quantity.label() }}
+        {{ form.to_currency(class="custom-select custom-select-lg mb-3", placeholder="FROM", style="width:120px") }}
+        
+        {% if cryptoError %}
+            <p class="error_monedas_distintas"> {{ cryptoError }} </p>
+        {% endif %}
+        
+        {{ form.submitCalculadora(class="title_button-new", style="width:150px")}}
+
         {{ form.to_quantity() }}
-    </div></br>
-    <div> 
-        {{ form.PU.label }}
-        {{ form.PU }} 
-    </div></br>
-    <div class="field">
-        {{ form.submit }}
-    </div>
+        <p class="to_quantity"> Q: {{ form.to_quantity.data}} </p> 
+
+        {% if sinSaldo %}
+            <p class="error_sin_saldo">{{ sinSaldo }}</p>
+        {% endif %}
+
+        {{ form.pu() }}    
+        <p class="pu"> P.U.:  {{ form.pu.data }}</p>  
+
+            
+   
+        {{ form.submitCompra(class="title_button-new", style="width:100px") }}
+    
 </form>
 
 {% endblock %}

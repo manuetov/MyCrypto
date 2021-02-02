@@ -27,8 +27,8 @@ except (ConnectionAbortedError, Timeout, TooManyRedirects) as e:
     print(e)
 
 #otra forma de añadir datos a una lista de diccionarios
-
-    mi_lista = []
+'''
+mi_lista = []
 dict = {}
 for x in data['data']:
     for coin in posible_coins:
@@ -37,3 +37,4 @@ for x in data['data']:
             dict['valor'] = ("${0:.2f}".format(float(x['quote']['USD']['price'])))
             mi_lista.append(dict)
 print (mi_lista)
+'''

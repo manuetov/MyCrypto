@@ -1,42 +1,48 @@
 {% extends 'base.html' %}
 
-{% block title %} Movimientos {% endblock %}
+{% block title %} Crypto list {% endblock %}
 
 {% block contenido %}
-    {% if datos |length > 0 %} <!--si hay movimientos saca la tabla else parrafo no hay movimientos-->
-        <table>
+    <h1 class="title">Lista de Movimientos </h1>
+    <table WIDTH="80%" class="primary">
+        <thead>
             <tr>
-                
                 <th class="Fecha">Date</th>
                 <th class="Hora">Time</th>
                 <th class="From">From</th>
-                <th class="Quantity">Q</th>
+                <th class="Quantity">Quantity</th>
                 <th class="To">To</th>
-                <th class="Quantity">Q</th>
-                <th class="P.U.">P.U.</th>
+                <th class="Quantity">Quantity</th>
+                <th class="P.U.">Unit Price</th>
             </tr>
-        {% for registro in datos %}
+        </thead>
+        {% if errorDB %}
+            <h5 class="error_db_movimientos">{{ errorDB }}</h5>
+        {% endif %}
+        <tbody>
+        {% if not ingresos %} <!--si hay movimientos saca la tabla else parrafo no hay movimientos-->
             <tr>
-                <td>{{ registro['date'] }} </td> <!-- lista de diccionarios en vez de lista de duplas-->         
-                <td>{{ registro['time'] }} </td>
-                <td>{{ registro['from_currency'] }} </td>          
-                <td>{{ registro['from_quantity'] }} </td>
-                <td>{{ registro['to_currency'] }} </td>
-                <td>{{ registro['to_quantity'] }} </td>          
-                <td>{{ registro['PU'] }} </td>
-                    
+                <td class="title_no_movimientos"> NO HAY MOVIMIENTOS </td>
             </tr>
-        {% endfor %}
-        <tr>
-                <td class="PU" colspan="3"> Total P.U. : {{total}}€ <br><br></td>
-        </tr> 
+        {% else %}
+            {% for ingreso in ingresos  %}
+            <tr class="movimientos">
+                <td>{{ ingreso[0] }} </td> <!-- lista de diccionarios en vez de lista de duplas-->         
+                <td>{{ ingreso[1] }} </td>
+                <td>{{ ingreso[2] }} </td>          
+                <td>{{ ingreso[3] }} </td>
+                <td>{{ ingreso[4] }} </td>
+                <td>{{ "{:,.5f}".format(ingreso[5]) }} </td>          
+                <td>{{ "{:,.5f}".format(ingreso[6]) }} </td>          
+            </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
         </table>
         <div class="title grid">
             <div class="title_button-new">
-                <a role="button" href="/creacompra">+</a>
+                <a role="button" href="/nuevacompra">+</a>
             </div>
         </div>
-    {% else %}
-        <p>No hay movimientos </p>
-    {% endif %}
+  
 {% endblock %}
