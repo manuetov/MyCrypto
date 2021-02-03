@@ -21,11 +21,11 @@ def listaMovimientos():
     
         return render_template ('listaMovimientos.html', menu='listaMovimientos', ingresos=ingresos)
 
-    except sqlite3.Error:
+    except sqlite3.Error: 
         ingresos = None
-        errorDB = "an error has occurred in the database, try again in a few minutes"
+        errorDB = "**ERROR** no se puede acceder a la base de datos, intentelo más tarde"
         return render_template('listaMovimientos.html', menu='listaMovimientos', errorDB=errorDB, ingresos=ingresos)
-        
+
 
 @app.route('/nuevacompra', methods = ['GET', 'POST'])
 def nuevaCompra():
@@ -42,22 +42,22 @@ def nuevaCompra():
     if request.values.get ('submitCalculadora'):
         
         if not form.validate():
-            cryptoError = "OPERACIÓN INCORRECTA - LA CANTIDAD DEBE SER NUMÉRICA Y SUPERIOR A 0"
+            cryptoError = "OPERACIÓN INCORRECTA - LA CANTIDAD DEBE SER NUMÉRICA Y SUPERIOR A 0" # comprueba que se introduzcan solo numeros mayor de 0
             return render_template("compra.html", menu='nuevacompra', cryptoError=cryptoError, form=form )
         if fromC == toC: #comprueba seleccion de monedas para que sea distintas
             cryptoError = "Error: Debe elegir monedas distintas"
             return render_template('compra.html', menu= 'nuevacompra', cryptoError=cryptoError, form=form)
 
-        apiConsulta = api.api(fromC, toC)
+        apiConsulta = api.api(fromC, toC) # devuelve ('', pu)
 
         if apiConsulta[0] =='error':
             messageError = api.apiErrors(apiConsulta[1])
             errorAPI = "ERROR EN API - {}".format(messageError)
-            return render_template("compra.html", menu='nuevacompra', form=form , errorAPI=errorAPI)
+            return render_template("compra.html", menu='nuevacompra', form=form, errorAPI=errorAPI)
         else:
-            dataQuant = apiConsulta[1]
+            dataQuant = apiConsulta[1] # pu
         
-        form.to_quantity.data = float(fromQ)/float(dataQuant)
+        form.to_quantity.data = float(fromQ)/float(dataQuant) # cantidad Q / pu 
         form.pu.data = dataQuant
 
         return render_template("compra.html", menu="nuevacompra", form = form)
@@ -117,27 +117,21 @@ def nuevaCompra():
 
                 form.pu.data = dataQuant
 
-            # Comprobación de saldo suficiente con la crypto que se quiere comprar
+            # Comprobación de saldo suficiente de la moneda a comprar
 
             if saldo >= form.from_quantity.data or fromC == 'EUR':
-            
-                #form.from_currency.choices.append(toC)
-                #dt = datetime.datetime.now()
-                #fecha=dt.strftime("%d/%m/%Y")
-                #hora=dt.strftime('%H:%M:%S')
+            # se conecta a la bbdd e inserta los datos introducidos y el resultado de la conversion de cryptos
                 conn = sqlite3.connect(DBFILE)
                 cursor = conn.cursor()
-                mov = ' INSERT INTO movimientos (date, time, from_currency, from_quantity, to_currency, to_quantity, pu) VALUES (?,?,?,?,?,?,?);'
-                cursor.execute(mov, (fecha, hora, fromC, fromQ, toC, form.to_quantity.data, form.pu.data))  
+                mov_bbdd = ' INSERT INTO movimientos (date, time, from_currency, from_quantity, to_currency, to_quantity, pu) VALUES (?,?,?,?,?,?,?);'
+                cursor.execute(mov_bbdd, (fecha, hora, fromC, fromQ, toC, form.to_quantity.data, form.pu.data))  
 
-                #return redirect(url_for('listaMovimientos'))
-                #return render_template("compra.html", menu='nuevacompra', form = form)
                 conn.commit()
 
                 ingresos = bbdd.dbconsulta('SELECT date, time, from_currency, from_quantity, to_currency, to_quantity, pu FROM movimientos') 
                 conn.close()
                 return render_template("listaMovimientos.html", menu='listaMovimientos', form = form, ingresos=ingresos)
-            else:
+            else: # comprueba que las monedas seleccionadas tengan saldo
                 form.pu.data  = dataQuant
                 sinSaldo = "NO TIENE SALDO SUFICIENTE EN {} PARA REALIZAR ESTA OPERACIÓN".format(fromC)
                 return render_template("compra.html", menu='nuevacompra', form=form , sinSaldo=sinSaldo)
@@ -151,58 +145,58 @@ def nuevaCompra():
 @app.route('/status', methods = ['GET','POST'])
 
 def inversion():
-
+    # lee la bbdd y la guarda en una variable, si no tiene movimientos se mostrará por pantalla 
     try:
-        movOrNot = bbdd.dbconsulta("SELECT date, time, from_currency, from_quantity, to_currency, to_quantity FROM MOVIMIENTOS;")
+        movimientos_bbdd = bbdd.dbconsulta("SELECT date, time, from_currency, from_quantity, to_currency, to_quantity FROM MOVIMIENTOS;")
     except sqlite3.Error:
-        totalInver = 0
-        valorAct = 0
-        dif = 0
+        total_Invertido = 0
+        valor_Actual = 0
+        beneficio_Perdida = 0
         errorDB = "ERROR EN BASE DE DATOS, INTENTE EN UNOS MINUTOS"
-        return render_template("status.html", menu="status", errorDB=errorDB, movOrNot=True)
+        return render_template("status.html", menu="status", errorDB=errorDB, movimientos_bbdd=True)
 
-    if movOrNot == None:
-        return render_template("status.html", menu="status", movOrNot=True)
+    if movimientos_bbdd == None:
+        return render_template("status.html", menu="status", movimientos_bbdd=True)
 
-
-    InverFrom = bbdd.dbconsulta('SELECT SUM (from_quantity) FROM MOVIMIENTOS WHERE from_currency LIKE "%EUR%";')
-    InverTo = bbdd.dbconsulta('SELECT SUM (from_quantity) FROM MOVIMIENTOS WHERE to_currency LIKE "%EUR%";')
+    # guarda la suma en EUR de las cantidades compradas y vendidas
+    Invertido_From_bbdd = bbdd.dbconsulta('SELECT SUM (from_quantity) FROM MOVIMIENTOS WHERE from_currency LIKE "%EUR%";')
+    Invertido_To_bbdd = bbdd.dbconsulta('SELECT SUM (from_quantity) FROM MOVIMIENTOS WHERE to_currency LIKE "%EUR%";')
 
     
-    totalInverFrom = 0
-    totalInverTo = 0
-    for x in range(len(InverFrom)):
-        if InverFrom[x] == (None,):
-            totalInverFrom += 0
+    total_Invertido_From = 0
+    total_Invertido_To = 0
+    for x in range(len(Invertido_From_bbdd)):
+        if Invertido_From_bbdd[x] == (None,):
+            total_Invertido_From += 0
         else:
-            InverFromInt = InverFrom[x][0]
-            totalInverFrom += InverFromInt
+            Invertido_FromInt = Invertido_From_bbdd[x][0]
+            total_Invertido_From += Invertido_FromInt
 
-    for x in range(len(InverTo)):
-        if InverTo[x] == (None,):
-            totalInverTo += 0
+    for x in range(len(Invertido_To_bbdd)):
+        if Invertido_To_bbdd[x] == (None,):
+            total_Invertido_To += 0
         else:
-            InverToInt = InverTo[x][0]
-            totalInverTo += InverToInt
+            Invertido_ToInt = Invertido_To_bbdd[x][0]
+            total_Invertido_To += Invertido_ToInt
     
-    totalInver = totalInverFrom + totalInverTo
+    total_Invertido = total_Invertido_From + total_Invertido_To
     cryptoSaldo()
 
-    xi = 0
-    cryptoValorActual = {}
-    valorAct = 0
+    xx = 0
+    crypto_valor_Actual = {}
+    valor_Actual = 0
     for coin in cryptoCoin:
         apiConsulta = api.api('EUR',coin)
         
         cotizacion = apiConsulta[1]
-        saldoCoin = cryptoSaldo()[xi]
-        cryptoValorActual[coin] = cotizacion * saldoCoin
-        valorAct += cryptoValorActual[coin]
-        xi += 1    
+        saldoCoin = cryptoSaldo()[xx]
+        crypto_valor_Actual[coin] = cotizacion * saldoCoin
+        valor_Actual += crypto_valor_Actual[coin]
+        xx += 1    
 
-    dif = valorAct - totalInver
+    beneficio_Perdida = valor_Actual - total_Invertido
 
-    return render_template("status.html", menu="status", totalInver=totalInver, valorAct=valorAct, cryptoBalance=cryptoSaldo(), dif=dif)
+    return render_template("status.html", menu="status", total_Invertido=total_Invertido, valor_Actual=valor_Actual, cryptoBalance=cryptoSaldo(), beneficio_Perdida=beneficio_Perdida)
 
 
     

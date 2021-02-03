@@ -109,7 +109,7 @@ td.PU {
     font-size: 1.2em; color: rgb(0, 0, 0);
     padding: 10px;
     position: relative;
-    left: 50px;
+    left: 120px;
     bottom:-30px;
 
 }
@@ -122,7 +122,7 @@ td.PU {
     font-size: 1.2em; color: rgb(0, 0, 0);
     padding: 10px;
     position: relative;
-    left: 50px;
+    left: 120px;
     bottom:-30px;
 
 }
@@ -136,7 +136,7 @@ td.PU {
     font-size: 1.2em; color: rgb(0, 0, 0);
     padding: 10px;
     position: relative;
-    left: 50px;
+    left: 120px;
     bottom: 22px;
 }
 
@@ -148,7 +148,7 @@ td.PU {
     font-size: 1.2em; color: rgb(0, 0, 0);
     padding: 10px;
     position: relative;
-    left: 50px;
+    left: 120px;
     bottom:100px;
 }
 
@@ -161,7 +161,7 @@ td.PU {
     font-size: 1.2em; color: rgb(0, 0, 0);
     padding: 10px;
     position: relative;
-    left: 50px;
+    left: 120px;
     bottom:152px;
 }
 
@@ -173,7 +173,7 @@ td.PU {
     font-size: 1.2em; color: rgb(0, 0, 0);
     padding: 10px;
     position: relative;
-    left: 50px;
+    left: 120px;
     bottom:170px;
 }
 
@@ -186,7 +186,7 @@ td.PU {
     font-size: 1.2em; color: rgb(0, 0, 0);
     padding: 10px;
     position: relative;
-    left: 50px;
+    left: 120px;
     bottom:222px;
 }
 
@@ -198,39 +198,10 @@ td.PU {
     font-size: 1.2em; color: rgb(231, 26, 26);
     padding: 10px;
     position: relative;
-    left: 50px;
+    left: 120px;
     bottom:222px;
 }
 
-.cryptosaldo_1 {
-
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    background-color: rgb(#000000);
-    font-weight: bold;
-    font-size: 1.8em; color: rgb(0, 0, 0);
-    padding: 10px;
-    position: relative;
-    left: -5px;
-    bottom:190px;
-}
-
-.cryptosaldo_coin {
-
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: bold;
-    text-decoration: underline rgb(20, 175, 0);
-    font-size: 1.2em; color: rgb(231, 26, 26);
-    position: relative;
-    left: 0px;
-    bottom:260px;
-}
-
-.cryptohead {
-
-    position: relative;
-    left: 0px;
-    bottom:200px;
-}
 
 .valid_error {
 
@@ -297,4 +268,24 @@ td.PU {
     position: relative;
     left: 450px;
     bottom:0px;
+}
+
+.error_api_compra {
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    font-size: 1.2em; color: rgb(231, 26, 26);
+    padding: 10px;
+    position: relative;
+    left: 0px;
+    bottom:20px;
+}
+
+.calculadora{
+    font-family: "FontAwesome";
+    width: 80px;
+}
+
+.hidden{
+    visibility: hidden;
 }
