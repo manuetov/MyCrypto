@@ -3,10 +3,9 @@ __pycache__
 movimientos/__pycache__
 .env
 .vscode/
-movimientos/Data/basededatos.csv
+movimientos/Data/basededatos.db
 config.py   
-pico-1.2.1
 apicopy.py
 api_json.py
 convert.py
-
+config.py
