@@ -78,7 +78,7 @@ def nuevaCompra():
         else:
             try:
                 saldo = bbdd.dbconsulta('''
-                            WITH BALANCE
+                            WITH RESULTADO
                             AS
                             (
                             SELECT SUM(to_quantity) AS saldo
@@ -90,7 +90,7 @@ def nuevaCompra():
                             WHERE from_currency LIKE "%{}%"
                             )
                             SELECT SUM(saldo)
-                            FROM BALANCE;
+                            FROM RESULTADO;
                             '''.format(fromC, fromC))
             except sqlite3.Error:
                 errorDB = "ERROR EN BASE DE DATOS, INTENTE EN UNOS MINUTOS"
