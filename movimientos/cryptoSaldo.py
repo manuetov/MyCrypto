@@ -7,7 +7,7 @@ def cryptoSaldo():
     cryptoBalance = []
     for coin in cryptoCoin:
         cryptoBalanceCoin = bbdd.dbconsulta('''
-                                WITH BALANCE
+                                WITH RESULTADO
                                 AS
                                 (
                                 SELECT SUM(to_quantity) AS saldo
@@ -19,7 +19,7 @@ def cryptoSaldo():
                                 WHERE from_currency LIKE "%{}%"
                                 )
                                 SELECT SUM(saldo)
-                                FROM BALANCE
+                                FROM RESULTADO
                                 '''.format(coin, coin))
         if cryptoBalanceCoin[0] == (None,):
             cryptoBalanceCoin=0
