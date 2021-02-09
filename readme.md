@@ -16,6 +16,14 @@ https://pro.coinmarketcap.com/
 Renombrar **config_Template.py** por **config.py**
 
 # Crear base de datos con sqlite3
+○ desde el directorio movimientos/Data
+■ sqlite3 <nombre_bd>.db
+● ejecutar
+■ .read migrations/initial.sql
+○ commprobar que se han creado las tablas
+■ .tables
+○ salir
+■ .q
 
 # Crear variable de entorno
 
