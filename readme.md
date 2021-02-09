@@ -24,6 +24,7 @@ Renombrar **config_Template.py** por **config.py**
 ■ .tables
 - salir
 ■ .q
+- Introducir la ruta del fichero <nombre_db> en el fichero **config.py**
 
 # Crear variable de entorno
 
