@@ -121,15 +121,22 @@ def nuevaCompra():
 
             if saldo >= form.from_quantity.data or fromC == 'EUR':
             # se conecta a la bbdd e inserta los datos introducidos y el resultado de la conversion de cryptos
-                conn = sqlite3.connect(DBFILE)
-                cursor = conn.cursor()
-                mov_bbdd = ' INSERT INTO movimientos (date, time, from_currency, from_quantity, to_currency, to_quantity, pu) VALUES (?,?,?,?,?,?,?);'
-                cursor.execute(mov_bbdd, (fecha, hora, fromC, fromQ, toC, form.to_quantity.data, form.pu.data))  
+                try:    
+                    conn = sqlite3.connect(DBFILE)
+                    cursor = conn.cursor()
+                    mov_bbdd = ' INSERT INTO movimientos (date, time, from_currency, from_quantity, to_currency, to_quantity, pu) VALUES (?,?,?,?,?,?,?);'
+                    cursor.execute(mov_bbdd, (fecha, hora, fromC, fromQ, toC, form.to_quantity.data, form.pu.data))  
+                    conn.commit()
+                except sqlite3.Error:
+                    errorDB = "ERROR EN BASE DE DATOS, INTENTE EN UNOS MINUTOS"
+                    return render_template("compra.html", menu='nuevacompra', form=form , errorDB=errorDB)
 
-                conn.commit()
-
-                ingresos = bbdd.dbconsulta('SELECT date, time, from_currency, from_quantity, to_currency, to_quantity, pu FROM movimientos') 
-                conn.close()
+                try:
+                    ingresos = bbdd.dbconsulta('SELECT date, time, from_currency, from_quantity, to_currency, to_quantity, pu FROM movimientos') 
+                    conn.close()
+                except sqlite3.Error:
+                    errorDB = "ERROR EN BASE DE DATOS, INTENTE EN UNOS MINUTOS"
+                    return render_template("compra.html", menu='nuevacompra', form=form , errorDB=errorDB)    
                 return render_template("listaMovimientos.html", menu='listaMovimientos', form = form, ingresos=ingresos)
             else: # comprueba que las monedas seleccionadas tengan saldo
                 form.pu.data  = dataQuant
@@ -149,9 +156,6 @@ def inversion():
     try:
         movimientos_bbdd = bbdd.dbconsulta("SELECT date, time, from_currency, from_quantity, to_currency, to_quantity FROM MOVIMIENTOS;")
     except sqlite3.Error:
-        total_Invertido = 0
-        valor_Actual = 0
-        beneficio_Perdida = 0
         errorDB = "ERROR EN BASE DE DATOS, INTENTE EN UNOS MINUTOS"
         return render_template("status.html", menu="status", errorDB=errorDB, movimientos_bbdd=True)
 
@@ -159,9 +163,12 @@ def inversion():
         return render_template("status.html", menu="status", movimientos_bbdd=True)
 
     # guarda la suma en EUR de las cantidades compradas y vendidas
-    Invertido_From_bbdd = bbdd.dbconsulta('SELECT SUM (from_quantity) FROM MOVIMIENTOS WHERE from_currency LIKE "%EUR%";')
-    Invertido_To_bbdd = bbdd.dbconsulta('SELECT SUM (from_quantity) FROM MOVIMIENTOS WHERE to_currency LIKE "%EUR%";')
-
+    try:
+        Invertido_From_bbdd = bbdd.dbconsulta('SELECT SUM (from_quantity) FROM MOVIMIENTOS WHERE from_currency LIKE "%EUR%";')
+        Invertido_To_bbdd = bbdd.dbconsulta('SELECT SUM (from_quantity) FROM MOVIMIENTOS WHERE to_currency LIKE "%EUR%";')
+    except sqlite3.Error:
+        errorDB = "ERROR EN BASE DE DATOS, INTENTE EN UNOS MINUTOS"
+        return render_template("status.html", menu="status", errorDB=errorDB, movimientos_bbdd=True)
     
     total_Invertido_From = 0
     total_Invertido_To = 0
@@ -180,8 +187,13 @@ def inversion():
             total_Invertido_To += Invertido_ToInt
     
     total_Invertido = total_Invertido_From + total_Invertido_To
-    cryptoSaldo()
-
+    
+    try: 
+        cryptoSaldo()
+    except sqlite3.Error:
+        errorDB = "ERROR EN BASE DE DATOS, INTENTE EN UNOS MINUTOS"
+        return render_template("status.html", menu="status", errorDB=errorDB, movimientos_bbdd=True)
+    
     xx = 0
     crypto_valor_Actual = {}
     valor_Actual = 0
@@ -197,6 +209,7 @@ def inversion():
     beneficio_Perdida = valor_Actual - total_Invertido
 
     return render_template("status.html", menu="status", total_Invertido=total_Invertido, valor_Actual=valor_Actual, cryptoBalance=cryptoSaldo(), beneficio_Perdida=beneficio_Perdida)
+
 
 
     
